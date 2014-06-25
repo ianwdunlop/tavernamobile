@@ -39,7 +39,12 @@
         android:textStyle="italic"
         android:visibility="visible" />
 
-    <com.handmark.pulltorefresh.library.PullToRefreshListView
+    <uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ptr_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ListView
         android:id="@+id/myWorkflowList"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
@@ -51,7 +56,11 @@
         android:divider="@android:color/transparent"
         android:dividerHeight="5dp"
         android:footerDividersEnabled="false"
-        android:headerDividersEnabled="false" />
+        android:headerDividersEnabled="false"
+        />
+    </uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout>
+
+
 
     <TextView
         android:id="@+id/myWorkflowDefaultText"

@@ -6,6 +6,10 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.org.taverna.server.client.InputPort;
 import android.content.Context;
 import android.content.Intent;
@@ -31,9 +35,7 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
-import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 
 import cs.man.ac.uk.tavernamobile.R;
 import cs.man.ac.uk.tavernamobile.dataaccess.DataProviderConstants;
@@ -48,12 +50,12 @@ import cs.man.ac.uk.tavernamobile.utils.CallbackTask;
 import cs.man.ac.uk.tavernamobile.utils.MessageHelper;
 import cs.man.ac.uk.tavernamobile.utils.SystemStatesChecker;
 
-public class RunsFragment extends Fragment {
+public class RunsFragment extends Fragment implements OnRefreshListener {
 
 	private FragmentActivity parentActivity;
 	private ActionMode mActionMode;
 	private RunsListAdapter mainListAdapter;
-	private PullToRefreshExpandableListView refreshableList;
+	private PullToRefreshLayout refreshableList;
 
 	private static final String runGroups[] = 
 		{ "Initialised", "Running", "Finished", "Stopped", "Deleted" };
@@ -83,8 +85,13 @@ public class RunsFragment extends Fragment {
 	private int selectedChildIndex;
 	
 	private WorkflowRun selectedRun;
-	
-	// run list view holder
+
+    @Override
+    public void onRefreshStarted(View view) {
+        prepareListData();
+    }
+
+    // run list view holder
 	static class ViewHolder{
 		TextView wfTitleVersion;
 		TextView wfuploaderName;
@@ -104,11 +111,17 @@ public class RunsFragment extends Fragment {
 			Bundle savedInstanceState) {
 		// super.onCreateView(inflater, container, savedInstanceState);
 		View wfRunsView = inflater.inflate(R.layout.main_runs, null); //container, false);
-		TextView barText = (TextView) wfRunsView.findViewById(R.id.runsList_bar_text);
+        PullToRefreshLayout mPullToRefreshLayout = (PullToRefreshLayout) wfRunsView.findViewById(R.id.pull_to_refresh_listview);
+        TextView barText = (TextView) wfRunsView.findViewById(R.id.runsList_bar_text);
 		barText.setText("Pull to refresh");
-		refreshableList = (PullToRefreshExpandableListView) wfRunsView
+		refreshableList = (PullToRefreshLayout) wfRunsView
 				.findViewById(R.id.pull_to_refresh_listview);
-		// display action bar menu
+        ActionBarPullToRefresh.from(getActivity())
+                .allChildrenArePullable()
+                .listener(this)
+                .setup(refreshableList);
+
+        // display action bar menu
 		setHasOptionsMenu(true);
 		return wfRunsView;
 	}
@@ -122,14 +135,7 @@ public class RunsFragment extends Fragment {
 		parentActivity = this.getActivity();
 		runManager = new WorkflowRunManager(parentActivity);
 		systemStateChecker = new SystemStatesChecker(parentActivity);
-		
-		refreshableList.setOnRefreshListener(new OnRefreshListener<ExpandableListView>() {
-		    @Override
-		    public void onRefresh(PullToRefreshBase<ExpandableListView> refreshView) {
-		        prepareListData();
-		    }
-		});
-		
+
 		mainListAdapter = new RunsListAdapter(parentActivity/*, childElements*/);
 //		refreshableList.setExpandableAdapter(mainListAdapter);
 //		for(int i = 0; i < mainListAdapter.getGroupCount(); i++){
@@ -274,7 +280,7 @@ public class RunsFragment extends Fragment {
 				// refresh list
 				mainListAdapter.notifyDataSetChanged();
 				// Mark the current Refresh as complete.
-				refreshableList.onRefreshComplete();
+				refreshableList.setRefreshComplete();
 			} else {
 				retrievedRuns = (HashMap<String, WorkflowRun>) result[0];
 				if (retrievedRuns == null || retrievedRuns.size() < 1) {
@@ -382,7 +388,7 @@ public class RunsFragment extends Fragment {
 			// mainListAdapter = new RunsListAdapter(parentActivity, childElements);
 			// refreshableList.setExpandableAdapter(mainListAdapter);
 			// Mark the current Refresh as complete.
-			refreshableList.onRefreshComplete();
+			refreshableList.setRefreshComplete();
 			
 			return null;
 		}
@@ -512,14 +518,14 @@ public class RunsFragment extends Fragment {
 			String startTime = workflowEntity.getStartTime();
 			String endTime = workflowEntity.getEndTime();
 			// hide time info if not available
-			viewHolder.startTimeText.setVisibility(8);
-			viewHolder.endTimeText.setVisibility(8);
+			viewHolder.startTimeText.setVisibility(View.INVISIBLE);
+			viewHolder.endTimeText.setVisibility(View.INVISIBLE);
 			if(startTime != null){
-				viewHolder.startTimeText.setVisibility(0);
+				viewHolder.startTimeText.setVisibility(View.VISIBLE);
 				viewHolder.startTimeText.setText(startTime);
 			}
 			if(endTime != null){
-				viewHolder.endTimeText.setVisibility(0);
+				viewHolder.endTimeText.setVisibility(View.INVISIBLE);
 				viewHolder.endTimeText.setText(endTime);
 			}
 			// TODO: fixed image scale

@@ -18,12 +18,28 @@ android {
     }
     productFlavors {
     }
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
 }
 
+configurations {
+    all*.exclude group: 'org.hamcrest'
+}
 dependencies {
-    compile 'com.github.chrisbanes.actionbarpulltorefresh:extra-abc:+'
-    compile 'org.simpleframework:simple-xml:2.7.1'
+    compile 'com.github.chrisbanes.actionbarpulltorefresh:library:+'
+    compile ('org.simpleframework:simple-xml:2.7.1') {
+        exclude module: 'stax'
+        exclude module: 'stax-api'
+        exclude module: 'xpp3'
+    }
     compile 'ch.acra:acra:4.3.0'
+    compile 'commons-io:commons-io:2.4'
+    compile 'commons-lang:commons-lang:2.6'
+    compile 'org.apache.httpcomponents:httpcore:4.3.2'
+    compile 'commons-httpclient:commons-httpclient:3.1'
+    compile 'com.googlecode.json-simple:json-simple:1.1.1'
     compile project(':mylib')
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile files('libs/taverna-server-client-0.9.2.jar')

@@ -9,9 +9,13 @@ import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.Options;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 
 import cs.man.ac.uk.tavernamobile.R;
 import cs.man.ac.uk.tavernamobile.datamodels.Workflow;
@@ -19,17 +23,19 @@ import cs.man.ac.uk.tavernamobile.myexperiment.WorkflowsLoader;
 import cs.man.ac.uk.tavernamobile.utils.CallbackTask;
 import cs.man.ac.uk.tavernamobile.utils.TavernaAndroid;
 import cs.man.ac.uk.tavernamobile.utils.WorkflowsListAdapter;
+import uk.co.senab.actionbarpulltorefresh.library.viewdelegates.AbsListViewDelegate;
 
 public class MyWorkflowsBase extends Fragment {
 
 	protected FragmentActivity parentActivity;
 	protected View myWorkflowsMainView;
 	protected TextView defaultText;
-	protected PullToRefreshListView workflowList;
+	protected ListView workflowList;
 	protected WorkflowsListAdapter resultListAdapter;
 	protected ArrayList<Workflow> workflows;
 	protected HashMap<String, Object> mCache;
-	
+	protected PullToRefreshLayout mPullToRefreshLayout;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -43,8 +49,11 @@ public class MyWorkflowsBase extends Fragment {
 		
 		TextView noticeText = (TextView) myWorkflowsMainView.findViewById(R.id.myWorkflowNoticeText);
 		noticeText.setText("Note: some items may not be visible to you, due to viewing permissions.");
-		
-		workflowList = (PullToRefreshListView) myWorkflowsMainView.findViewById(R.id.myWorkflowList);
+
+        ListView listView = (ListView) myWorkflowsMainView.findViewById(R.id.myWorkflowList);
+        // Now find the PullToRefreshLayout and set it up
+        mPullToRefreshLayout = (PullToRefreshLayout) myWorkflowsMainView.findViewById(R.id.ptr_layout);
+
 		return myWorkflowsMainView;
 	}
 
@@ -80,7 +89,7 @@ public class MyWorkflowsBase extends Fragment {
 					workflowList.setAdapter(resultListAdapter);
 				}
 				if(refreshListener != null) refreshListener.onTaskComplete();
-				workflowList.onRefreshComplete();
+				mPullToRefreshLayout.setRefreshComplete();
 				return null;
 			}
 		});

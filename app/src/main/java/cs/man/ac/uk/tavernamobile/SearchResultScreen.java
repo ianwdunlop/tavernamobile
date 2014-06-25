@@ -106,11 +106,12 @@ public class SearchResultScreen extends Activity implements CallbackTask {
 		/*resultListAdapter = new SearchResultListAdapter(this, workflowResults);
 		resultList.addFooterView(footerView);
 		resultList.setAdapter(resultListAdapter);*/
-		
-		onScrollTaskHandler = 
-				new ListViewOnScrollTaskHandler(resultList, new OnScrollLoadingTask());
-		onScrollTaskHandler.setOnScrollLoading();
-		
+		// TODO this is the wrong signature for a ListViewOnScrollTaskHandler. It needs a
+        // MainPanelActivity
+		//onScrollTaskHandler =
+		//		new ListViewOnScrollTaskHandler(resultList, new OnScrollLoadingTask());
+		//onScrollTaskHandler.setOnScrollLoading();
+
 		// setup event reaction -
 		// tap on one of the result going to detail
 		final SearchResultScreen currentClass = this;
@@ -218,9 +219,9 @@ public class SearchResultScreen extends Activity implements CallbackTask {
 		if(searchQuery == null){
 			return;
 		}
-		resultList.setVisibility(8);
+		resultList.setVisibility(View.INVISIBLE);
 		resultList.removeFooterView(footerView);
-		loadingProBar.setVisibility(0);
+		loadingProBar.setVisibility(View.VISIBLE);
 		// set up a loader for loading indexed workflows
 		search.registerLoadingListener(iniLoadingListener);
 		// reset page index
@@ -268,7 +269,7 @@ public class SearchResultScreen extends Activity implements CallbackTask {
 					"Alert", "Oops! You haven't told me what you would like to search !", null);
 		}
 		else{
-			loadingProBar.setVisibility(0);
+			loadingProBar.setVisibility(View.VISIBLE);
 			// change to initial loading listener
 			search.registerLoadingListener(iniLoadingListener);
 			// searchQueryQuote.setText("Search results for : \"" + searchQuery + "\"");
@@ -350,7 +351,7 @@ public class SearchResultScreen extends Activity implements CallbackTask {
 			if(result[0] instanceof String){
 				// exception message
 				MessageHelper.showMessageDialog(currentActivity, null, (String)result[0], null);
-				loadingProBar.setVisibility(8);
+				loadingProBar.setVisibility(View.INVISIBLE);
 				return null;
 			}
 			
@@ -397,8 +398,8 @@ public class SearchResultScreen extends Activity implements CallbackTask {
 			
 			// hide loading progress bar
 			// display results
-			resultList.setVisibility(0);
-			loadingProBar.setVisibility(8);
+			resultList.setVisibility(View.VISIBLE);
+			loadingProBar.setVisibility(View.INVISIBLE);
 			
 			// when initial loading complete
 			// change the loading listener back to "auto-load-more"
