@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/inputDetailRoot"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#1E90FF"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/inputName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_margin="10dp"
+        android:text="Input Name"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFFFFF" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="#A0E0FFFF"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/inputValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Input Value: "
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <EditText
+                android:id="@+id/inputValueText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:ems="10"
+                android:inputType="textMultiLine" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:text="Or select from:"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal" >
+
+                <ImageButton
+                    android:id="@+id/fileSelectButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="2"
+                    android:minHeight="38dp"
+                    android:minWidth="44dp"
+                    android:src="@drawable/folder_icon"
+                    android:textSize="15sp" />
+
+                <ImageButton
+                    android:id="@+id/dropboxFileSelButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:minHeight="48dp"
+                    android:minWidth="44dp"
+                    android:src="@drawable/dropbox_icon"
+                    android:textSize="15sp" />
+
+                <ImageButton
+                    android:id="@+id/googleDriveFileSelButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:minHeight="38dp"
+                    android:minWidth="44dp"
+                    android:src="@drawable/google_drive_icon"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="10dp"
+            android:background="@color/White" >
+
+            <TextView
+                android:id="@+id/selectedFileName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="No File Chosen" />
+        </LinearLayout>
+    </LinearLayout>
+    <!--
+    <android.support.v4.view.ViewPager
+        android:id="@+id/inputViewPager"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:layout_weight="1" >
+        <android.support.v4.view.PagerTabStrip
+            android:id="@+id/inputTabStrip"
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:layout_gravity="top" >
+        </android.support.v4.view.PagerTabStrip>
+    </android.support.v4.view.ViewPager>
+    -->
+
+</LinearLayout>
