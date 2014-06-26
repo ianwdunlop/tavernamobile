@@ -73,7 +73,7 @@ public class TavernaAndroid extends Application {
 		try {
 			URI serverURI = new URI(TavernaServerAddress);
 			server = new Server(serverURI);
-            //TODO for some reason the app cannot see the
+            //TODO for some reason the app cannot see the BasicScheme
 			//defaultUser = new HttpBasicCredentials("taverna", "taverna");
 		} catch (Exception e) {
 			e.printStackTrace();
