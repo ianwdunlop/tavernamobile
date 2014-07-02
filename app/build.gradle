@@ -37,8 +37,7 @@ dependencies {
     compile 'ch.acra:acra:4.3.0'
     compile 'commons-io:commons-io:2.4'
     compile 'commons-lang:commons-lang:2.6'
-    compile 'org.apache.httpcomponents:httpcore:4.3.2'
-    compile 'commons-httpclient:commons-httpclient:3.1'
+    compile group: 'org.apache.httpcomponents' , name: 'httpclient-android' , version: '4.3.3'
     compile 'com.googlecode.json-simple:json-simple:1.1.1'
     compile project(':mylib')
     compile fileTree(dir: 'libs', include: ['*.jar'])

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="acra-4.3.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ch.acra/acra/4.3.0/49be46e573dddddcfc5ebba3e5bfd03aa364dba2/acra-4.3.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ch.acra/acra/4.3.0/b5b37f41e012f97d72e18c08f3c6f2946af19888/acra-4.3.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
