@@ -188,7 +188,7 @@ public class WorkflowsLoader implements CallbackTask{
 			
 			try{
 				User results = (User) requestHandler.Get(searchUri, User.class, null, null);
-				WorkflowBriefCollection myWf = results.getWorkflows();
+ 				WorkflowBriefCollection myWf = results.getWorkflows();
 				if(myWf != null){
 					for(WorkflowBrief wfb: myWf.getWorkflowBrief()){
 						String uri = wfb.getUri() + "&elements=title,content-uri,uploader,preview,privileges,"
@@ -199,8 +199,9 @@ public class WorkflowsLoader implements CallbackTask{
 				}
 				
 				UserFavourited favourite = results.getFavourited();
-				if(favourite != null){
-					List<ElementBase> favouritedWf = favourite.getFavouritedEntity();
+                List<ElementBase> favouritedWf = favourite.getFavouritedEntity();
+                //TODO maybe favouritedWf shouldn't be null, it can be empty but not null??
+                if(favouritedWf != null){
 					for(ElementBase wfb: favouritedWf){
 						if(wfb instanceof WorkflowBrief){
 							String uri = wfb.getUri() + "&elements=title,content-uri,uploader,preview,privileges,"

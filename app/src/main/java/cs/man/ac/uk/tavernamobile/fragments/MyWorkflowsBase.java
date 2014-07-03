@@ -50,7 +50,7 @@ public class MyWorkflowsBase extends Fragment {
 		TextView noticeText = (TextView) myWorkflowsMainView.findViewById(R.id.myWorkflowNoticeText);
 		noticeText.setText("Note: some items may not be visible to you, due to viewing permissions.");
 
-        ListView listView = (ListView) myWorkflowsMainView.findViewById(R.id.myWorkflowList);
+        workflowList = (ListView) myWorkflowsMainView.findViewById(R.id.myWorkflowList);
         // Now find the PullToRefreshLayout and set it up
         mPullToRefreshLayout = (PullToRefreshLayout) myWorkflowsMainView.findViewById(R.id.ptr_layout);
 
