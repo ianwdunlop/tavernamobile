@@ -112,6 +112,7 @@ public class WorkflowsLoader implements CallbackTask{
 	public void LoadMyWorkflows(String userID){
 		// check for Internet connection
 		if (!sysStatesChecker.isNetworkConnected()){
+            //TODO Notify the user that there is no network connection
 			return;
 		}
 		

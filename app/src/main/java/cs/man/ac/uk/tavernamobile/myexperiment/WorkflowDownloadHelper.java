@@ -193,7 +193,7 @@ public class WorkflowDownloadHelper implements CallbackTask {
 			outputFile = new File(locationToSave, fileName);
 			FileOutputStream fileOutputStream = new FileOutputStream(outputFile);
 			fileOutputStream.write(byteArrayBuffer.toByteArray());
-			fileOutputStream.flush();
+	        fileOutputStream.flush();
 			fileOutputStream.close();
 
 			// log info for debugging
